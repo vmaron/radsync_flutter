@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:radsync_flutter/modules/api/auth_service.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 
-import '../models/auth_token.dart';
 import '../models/constants.dart';
 
 class LoginWebView extends StatefulWidget {
@@ -46,17 +45,14 @@ class _LoginWebViewState extends State<LoginWebView> {
           navigationDelegate: (navigation) async {
             if (navigation.url.startsWith(Constants.redirectUri)) {
               final token = navigation.url.split("/").last;
-              final auth = await fetchAuthToken(token);
-              debugPrint("Hello ${auth.profile?.firstName}");
-              debugPrint(auth.jwt?.token);
-              /* ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    'You have successfully signed in',
-                  ),
-                ),
-              );
-*/
+              final authService = AuthService();
+              final auth = await authService.fetchAuthToken(token);
+              if (kDebugMode) {
+                print("Hello ${auth.profile?.firstName}");
+              }
+              if (kDebugMode) {
+                print(auth.jwt?.token);
+              }
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
@@ -81,17 +77,5 @@ class _LoginWebViewState extends State<LoginWebView> {
         },
       ),
     };
-  }
-}
-
-Future<AuthToken> fetchAuthToken(String token) async {
-  final url = "${Constants.host}/api/auth/$token";
-  final response = await http.get(url);
-
-  if (response.statusCode == 200) {
-    final authToken = AuthToken.fromJson(jsonDecode(response.body));
-    return authToken;
-  } else {
-    throw Exception("Failed to get data from API");
   }
 }
