@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:radsync_flutter/modules/api/auth_service.dart';
+import 'package:radsync_flutter/screens/waste_screen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter/foundation.dart';
 
 import '../models/constants.dart';
+import '../modules/tools/navigate.dart';
 
 class LoginWebView extends StatefulWidget {
   const LoginWebView({required this.controller, super.key});
@@ -46,13 +47,7 @@ class _LoginWebViewState extends State<LoginWebView> {
             if (navigation.url.startsWith(Constants.redirectUri)) {
               final token = navigation.url.split("/").last;
               final authService = AuthService();
-              final auth = await authService.fetchAuthToken(token);
-              if (kDebugMode) {
-                print("Hello ${auth.profile?.firstName}");
-              }
-              if (kDebugMode) {
-                print(auth.jwt?.token);
-              }
+              authService.fetchAuthToken(token).then((value) => {Navigate.replaceTo(context, const WasteScreen())});
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
