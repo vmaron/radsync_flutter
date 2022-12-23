@@ -1,9 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+import '../modules/api/auth_service.dart';
+import '../modules/tools/navigate.dart';
+import 'login_web_view.dart';
 
 const List<Tab> tabs = <Tab>[
   Tab(text: 'Waste'),
   Tab(text: 'Patient Room'),
   Tab(text: 'Inventory'),
+  Tab(text: '')
 ];
 
 class WasteScreen extends StatelessWidget {
@@ -32,20 +40,29 @@ class WasteScreen extends StatelessWidget {
               indicatorColor: Colors.white,
               tabs: <Widget>[
                 Container(
-                    width: 80,
                     height: 50,
-                    alignment: Alignment.center,
-                    child: const Text("WASTE")),
+                    alignment: Alignment.center, padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                    child: const Text("WASTE", overflow: TextOverflow.ellipsis, maxLines: 1)),
                 Container(
-                    width: 120,
                     height: 50,
-                    alignment: Alignment.center,
-                    child: const Text("PATIENT ROOM")),
+                    alignment: Alignment.center, padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                    child: const Text("PATIENT ROOM", overflow: TextOverflow.ellipsis, maxLines: 1)),
                 Container(
-                    width: 80,
                     height: 50,
-                    alignment: Alignment.center,
-                    child: const Text("INVENTORY"))
+                    alignment: Alignment.center, padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                    child: const Text("INVENTORY", overflow: TextOverflow.ellipsis, maxLines: 1)),
+                Container(
+                  height: 50,
+                  alignment: Alignment.center, padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                  child: IconButton(
+                    onPressed: () {
+                      final authService = AuthService();
+                      authService.logout();
+                      Navigate.push(context, LoginWebView(controller: Completer<WebViewController>()));
+                    },
+                    icon: const Icon(Icons.account_circle_sharp),
+                  ),
+                ),
               ],
             ),
           ),

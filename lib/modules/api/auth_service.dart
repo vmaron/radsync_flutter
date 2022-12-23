@@ -24,6 +24,11 @@ class AuthService {
     }
   }
 
+ logout() async{
+    Dio dio = getDioClient();
+    await dio.get("${Constants.host}/api/auth/logout");
+  }
+
   Dio getDioClient() {
     final options = BaseOptions(connectTimeout: 5000);
     final dio = Dio(options);
