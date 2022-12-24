@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class WasteScreen extends StatelessWidget {
-  const WasteScreen({
+class InventoryScreen extends StatelessWidget {
+  const InventoryScreen({
     Key? key,
   }) : super(key: key);
 
@@ -9,7 +9,7 @@ class WasteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Text(
-      'Waste Tab',
+      'Inventory',
       style: Theme.of(context).textTheme.headline5,
     ));
   }
