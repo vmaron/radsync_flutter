@@ -1,7 +1,7 @@
 class AuthToken {
   Profile? profile;
   Jwt? jwt;
-  Null? message;
+  String? message;
   String? relayStateQuery;
   bool? succeeded;
 
@@ -13,25 +13,24 @@ class AuthToken {
       this.succeeded});
 
   AuthToken.fromJson(Map<String, dynamic> json) {
-    profile =
-        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
-    jwt = json['jwt'] != null ? new Jwt.fromJson(json['jwt']) : null;
+    profile = json['profile'] != null ? Profile.fromJson(json['profile']) : null;
+    jwt = json['jwt'] != null ? Jwt.fromJson(json['jwt']) : null;
     message = json['message'];
     relayStateQuery = json['relayStateQuery'];
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.profile != null) {
-      data['profile'] = this.profile!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (profile != null) {
+      data['profile'] = profile!.toJson();
     }
-    if (this.jwt != null) {
-      data['jwt'] = this.jwt!.toJson();
+    if (jwt != null) {
+      data['jwt'] = jwt!.toJson();
     }
-    data['message'] = this.message;
-    data['relayStateQuery'] = this.relayStateQuery;
-    data['succeeded'] = this.succeeded;
+    data['message'] = message;
+    data['relayStateQuery'] = relayStateQuery;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -69,14 +68,14 @@ class Profile {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['employeeId'] = this.employeeId;
-    data['lastName'] = this.lastName;
-    data['firstName'] = this.firstName;
-    data['email'] = this.email;
-    data['role'] = this.role;
-    data['emailPreferences'] = this.emailPreferences;
-    data['lastLoginDateTime'] = this.lastLoginDateTime;
+    data['id'] = id;
+    data['employeeId'] = employeeId;
+    data['lastName'] = lastName;
+    data['firstName'] = firstName;
+    data['email'] = email;
+    data['role'] = role;
+    data['emailPreferences'] = emailPreferences;
+    data['lastLoginDateTime'] = lastLoginDateTime;
     return data;
   }
 }
@@ -94,8 +93,8 @@ class Jwt {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['validTo'] = this.validTo;
-    data['token'] = this.token;
+    data['validTo'] = validTo;
+    data['token'] = token;
     return data;
   }
 }
