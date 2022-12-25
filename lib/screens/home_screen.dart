@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:radsync_flutter/widgets/navbar.dart';
 
 import '../widgets/logout_button.dart';
 import 'package:flutter/material.dart';
@@ -39,35 +40,45 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Radsync"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const <Widget>[
+            Text("Radsync"),
+            LogOutButton(),
+          ],
+        ),
         bottom: TabBar(
           isScrollable: true,
           controller: _tabController,
-          indicatorColor: Colors.white,
           tabs: [
             Container(
                 height: 50,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                child: const Text("WASTE", overflow: TextOverflow.ellipsis, maxLines: 1)),
+                child: const Text("Submit Request", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12))),
             Container(
                 height: 50,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                child: const Text("PATIENT ROOM", overflow: TextOverflow.ellipsis, maxLines: 1)),
+                child: const Text("My Requests", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12))),
             Container(
                 height: 50,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                child: const Text("INVENTORY", overflow: TextOverflow.ellipsis, maxLines: 1)),
-            const LogOutButton(),
+                child: const Text("Pending", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12))),
+            Container(
+                height: 50,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                child: const Text("Completed", overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 12))),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [WasteScreen(), PatientRoomScreen(), InventoryScreen(), Tab(text: '')],
+        children: const [WasteScreen(), PatientRoomScreen(), InventoryScreen(), InventoryScreen()],
       ),
+      bottomNavigationBar: const Navbar(),
     );
   }
 }

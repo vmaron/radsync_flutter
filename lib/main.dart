@@ -21,7 +21,7 @@ void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light().copyWith(
+      theme: ThemeData(/*fontFamily: "Montserrat"*/).copyWith(
         pageTransitionsTheme: pageTransitionsTheme,
         colorScheme: colorScheme,
         appBarTheme: appBarTheme(colorScheme),
@@ -32,8 +32,8 @@ void main() {
         navigationRailTheme: navigationRailTheme(colorScheme),
         tabBarTheme: tabBarTheme(colorScheme),
         drawerTheme: drawerTheme(colorScheme),
-        scaffoldBackgroundColor: colorScheme.background,
-        useMaterial3: true,
+        useMaterial3: true
+        // scaffoldBackgroundColor: colorScheme.background,
       ),
       home: const RadsyncApp(),
     ),
