@@ -2,16 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:radsync_flutter/modules/api/auth_service.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
 import 'package:radsync_flutter/models/constants.dart';
-import 'package:radsync_flutter/modules/tools/navigate.dart';
-import 'package:radsync_flutter/features/waste/waste.dart';
-
+import 'package:go_router/go_router.dart';
 
 class LoginWebView extends StatefulWidget {
-  const LoginWebView({required this.controller, super.key});
+  LoginWebView({super.key});
 
-  final Completer<WebViewController> controller;
+  final Completer<WebViewController> controller = Completer<WebViewController>();
 
   @override
   State<LoginWebView> createState() => _LoginWebViewState();
@@ -44,11 +41,11 @@ class _LoginWebViewState extends State<LoginWebView> {
               loadingPercentage = 100;
             });
           },
-          navigationDelegate: (navigation) async {
+          navigationDelegate: (navigation) {
             if (navigation.url.startsWith(Constants.redirectUri)) {
               final token = navigation.url.split("/").last;
               final authService = AuthService();
-              authService.fetchAuthToken(token).then((value) => {Navigate.replaceTo(context, const WasteHomeScreen())});
+              authService.fetchAuthToken(token).then((value) => context.go('/waste'));
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
