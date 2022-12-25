@@ -10,20 +10,20 @@ class Tab {
 }
 
 final tabs = [
-  Tab('Submit Request', 'Submit Request'),
-  Tab('My Requests', 'My Requests'),
-  Tab('Pending', 'Pending Requests'),
+  Tab('Set-up Request', 'Submit Set-up Requests'),
+  Tab('Release Request', 'Submit Release Request'),
+  Tab('Queued', 'Requests Queue'),
   Tab('Completed', 'Completed Requests'),
 ];
 
-class WasteHomeScreen extends StatefulWidget {
-  const WasteHomeScreen({super.key});
+class PatientRoomHomeScreen extends StatefulWidget {
+  const PatientRoomHomeScreen({super.key});
 
   @override
-  State<WasteHomeScreen> createState() => _WasteHomeScreenState();
+  State<PatientRoomHomeScreen> createState() => _PatientRoomHomeScreenState();
 }
 
-class _WasteHomeScreenState extends State<WasteHomeScreen> with TickerProviderStateMixin {
+class _PatientRoomHomeScreenState extends State<PatientRoomHomeScreen> with TickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -72,7 +72,7 @@ class _WasteHomeScreenState extends State<WasteHomeScreen> with TickerProviderSt
         controller: _tabController,
         children: tabs.map((Tab tab) => Empty(title: tab.title)).toList(),
       ),
-      bottomNavigationBar: const Navbar(initialIndex: 0),
+      bottomNavigationBar: const Navbar(initialIndex: 1),
     );
   }
 }
