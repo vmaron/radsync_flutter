@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:radsync_flutter/screens/login_web_view.dart';
 import 'package:radsync_flutter/shared/providers/theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'features/auth/auth.dart';
 
 void main() {
   const NoAnimationPageTransitionsBuilder();
