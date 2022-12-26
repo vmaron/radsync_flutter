@@ -35,8 +35,8 @@ class _RadsyncAppState extends State<RadsyncApp> {
         navigationRailTheme: navigationRailTheme(colorScheme),
         tabBarTheme: tabBarTheme(colorScheme),
         drawerTheme: drawerTheme(colorScheme),
-        useMaterial3: true
-      // scaffoldBackgroundColor: colorScheme.background,
+        useMaterial3: true,
+        // scaffoldBackgroundColor: colorScheme.background,
     );
 
     return MaterialApp.router(

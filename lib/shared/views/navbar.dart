@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class Navbar extends StatefulWidget {
   final int initialIndex;
 
   const Navbar({
-    required this.initialIndex, Key? key,
+    required this.initialIndex,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -46,19 +47,32 @@ class _NavbarState extends State<Navbar> {
         }
         setState(() => _currentIndex = selectedIndex);
       },
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: FaIcon(
-            FontAwesomeIcons.boxArchive,
+          icon: SvgPicture.asset(
+            'assets/icons/archive-light.svg',
+            width: 24,
+            height: 24,
+            color: _currentIndex == 0 ? Colors.blue : Colors.black,
           ),
           label: 'Waste Requests',
         ),
         BottomNavigationBarItem(
-          icon: FaIcon(FontAwesomeIcons.bedPulse),
+          icon: SvgPicture.asset(
+            'assets/icons/procedures-light.svg',
+            width: 24,
+            height: 24,
+            color: _currentIndex == 1 ? Colors.blue : Colors.black,
+          ),
           label: 'Patient Room',
         ),
         BottomNavigationBarItem(
-          icon: FaIcon(FontAwesomeIcons.clipboardList),
+          icon: SvgPicture.asset(
+            'assets/icons/clipboard-list-light.svg',
+            width: 24,
+            height: 24,
+            color: _currentIndex == 2 ? Colors.blue : Colors.black,
+          ),
           label: 'Inventory',
         )
       ],

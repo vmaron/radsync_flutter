@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:radsync_flutter/modules/api/auth_service.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,7 +20,11 @@ class LogOutButton extends StatelessWidget {
           authService.logout();
           context.go('/');
         },
-        icon: const Icon(Icons.account_circle_sharp),
+        icon: SvgPicture.asset(
+          'assets/icons/user-circle-solid.svg',
+          width: 20,
+          height: 20,
+        ),
       ),
     );
   }
