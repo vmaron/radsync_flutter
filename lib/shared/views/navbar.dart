@@ -25,16 +25,9 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      selectedFontSize: 12,
-      unselectedFontSize: 12,
-      iconSize: 22,
-      currentIndex: _currentIndex,
-      selectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, height: 2),
-      unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, height: 2),
-      selectedItemColor: Colors.blue,
-      type: BottomNavigationBarType.fixed,
-      onTap: (selectedIndex) {
+    const double iconSize = 16;
+    return NavigationBar(
+      onDestinationSelected: (int selectedIndex) {
         if (selectedIndex != _currentIndex) {
           switch (selectedIndex) {
             case 0:
@@ -47,34 +40,32 @@ class _NavbarState extends State<Navbar> {
         }
         setState(() => _currentIndex = selectedIndex);
       },
-      items: [
-        BottomNavigationBarItem(
+      selectedIndex: _currentIndex,
+      destinations: <Widget>[
+        NavigationDestination(
           icon: SvgPicture.asset(
             'assets/icons/archive-light.svg',
-            width: 24,
-            height: 24,
-            color: _currentIndex == 0 ? Colors.blue : Colors.black,
+            width: iconSize,
+            height: iconSize,
           ),
           label: 'Waste Requests',
         ),
-        BottomNavigationBarItem(
+        NavigationDestination(
           icon: SvgPicture.asset(
             'assets/icons/procedures-light.svg',
-            width: 24,
-            height: 24,
-            color: _currentIndex == 1 ? Colors.blue : Colors.black,
+            width: iconSize,
+            height: iconSize,
           ),
           label: 'Patient Room',
         ),
-        BottomNavigationBarItem(
+        NavigationDestination(
           icon: SvgPicture.asset(
             'assets/icons/clipboard-list-light.svg',
-            width: 24,
-            height: 24,
-            color: _currentIndex == 2 ? Colors.blue : Colors.black,
+            width: iconSize,
+            height: iconSize,
           ),
           label: 'Inventory',
-        )
+        ),
       ],
     );
   }

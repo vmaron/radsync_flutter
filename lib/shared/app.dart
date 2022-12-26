@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:radsync_flutter/shared/providers/theme.dart';
 import 'router.dart';
 
@@ -12,41 +13,38 @@ class RadsyncApp extends StatefulWidget {
 class _RadsyncAppState extends State<RadsyncApp> {
   @override
   Widget build(BuildContext context) {
-    final colorScheme = ThemeData.light().colorScheme;
+    final settings = ValueNotifier(ThemeSettings(
+      sourceColor: Colors.blue,
+      themeMode: ThemeMode.system,
+    ));
 
-    const pageTransitionsTheme = PageTransitionsTheme(
-      builders: <TargetPlatform, PageTransitionsBuilder>{
-        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-        TargetPlatform.linux: NoAnimationPageTransitionsBuilder(),
-        TargetPlatform.macOS: NoAnimationPageTransitionsBuilder(),
-        TargetPlatform.windows: NoAnimationPageTransitionsBuilder(),
-      },
-    );
-
-    final theme = ThemeData.light().copyWith(
-        pageTransitionsTheme: pageTransitionsTheme,
-        colorScheme: colorScheme,
-        appBarTheme: appBarTheme(colorScheme),
-        cardTheme: cardTheme(),
-        listTileTheme: listTileTheme(colorScheme),
-        bottomAppBarTheme: bottomAppBarTheme(colorScheme),
-        bottomNavigationBarTheme: bottomNavigationBarTheme(colorScheme),
-        navigationRailTheme: navigationRailTheme(colorScheme),
-        tabBarTheme: tabBarTheme(colorScheme),
-        drawerTheme: drawerTheme(colorScheme),
-        useMaterial3: true,
-        // scaffoldBackgroundColor: colorScheme.background,
-    );
-
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Radsync',
-      theme: theme,
-      routeInformationParser: appRouter.routeInformationParser,
-      routeInformationProvider:
-      appRouter.routeInformationProvider,
-      routerDelegate: appRouter.routerDelegate,
+    return DynamicColorBuilder(
+      builder: (lightDynamic, darkDynamic) => ThemeProvider(
+          lightDynamic: lightDynamic,
+          darkDynamic: darkDynamic,
+          settings: settings,
+          child: NotificationListener<ThemeSettingChange>(
+            onNotification: (notification) {
+              settings.value = notification.settings;
+              return true;
+            },
+            child: ValueListenableBuilder<ThemeSettings>(
+              valueListenable: settings,
+              builder: (context, value, _) {
+                final theme = ThemeProvider.of(context);
+                return MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Radsync',
+                  theme: theme.light(settings.value.sourceColor),
+                  darkTheme: theme.dark(settings.value.sourceColor),
+                  themeMode: theme.themeMode(),
+                  routeInformationParser: appRouter.routeInformationParser,
+                  routeInformationProvider: appRouter.routeInformationProvider,
+                  routerDelegate: appRouter.routerDelegate,
+                );
+              },
+            ),
+          )),
     );
   }
 }
