@@ -14,7 +14,8 @@ class _RadsyncAppState extends State<RadsyncApp> {
   @override
   Widget build(BuildContext context) {
     final settings = ValueNotifier(ThemeSettings(
-      sourceColor: Colors.blue,
+      lightThemeColor: Colors.indigo,
+      darkThemeColor: ThemeData.dark().primaryColor,
       themeMode: ThemeMode.system,
     ));
 
@@ -35,8 +36,8 @@ class _RadsyncAppState extends State<RadsyncApp> {
                 return MaterialApp.router(
                   debugShowCheckedModeBanner: false,
                   title: 'Radsync',
-                  theme: theme.light(settings.value.sourceColor),
-                  darkTheme: theme.dark(settings.value.sourceColor),
+                  theme: theme.light(settings.value.lightThemeColor),
+                  darkTheme: theme.dark(settings.value.darkThemeColor),
                   themeMode: theme.themeMode(),
                   routeInformationParser: appRouter.routeInformationParser,
                   routeInformationProvider: appRouter.routeInformationProvider,

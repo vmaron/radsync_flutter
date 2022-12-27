@@ -54,12 +54,11 @@ class ThemeProvider extends InheritedWidget {
   }
 
   Color blend(Color targetColor) {
-    return Color(
-        Blend.harmonize(targetColor.value, settings.value.sourceColor.value));
+    return Color(Blend.harmonize(targetColor.value, settings.value.lightThemeColor.value));
   }
 
   Color source(Color? target) {
-    Color source = settings.value.sourceColor;
+    Color source = settings.value.lightThemeColor;
     if (target != null) {
       source = blend(target);
     }
@@ -67,11 +66,8 @@ class ThemeProvider extends InheritedWidget {
   }
 
   ColorScheme colors(Brightness brightness, Color? targetColor) {
-    final dynamicPrimary = brightness == Brightness.light
-        ? lightDynamic?.primary
-        : darkDynamic?.primary;
     return ColorScheme.fromSeed(
-      seedColor: dynamicPrimary ?? source(targetColor),
+      seedColor: source(targetColor),
       brightness: brightness,
     );
   }
@@ -205,11 +201,13 @@ class ThemeProvider extends InheritedWidget {
 
 class ThemeSettings {
   ThemeSettings({
-    required this.sourceColor,
+    required this.lightThemeColor,
+    required this.darkThemeColor,
     required this.themeMode,
   });
 
-  final Color sourceColor;
+  final Color lightThemeColor;
+  final Color darkThemeColor;
   final ThemeMode themeMode;
 }
 

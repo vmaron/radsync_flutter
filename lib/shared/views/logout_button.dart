@@ -24,6 +24,7 @@ class LogOutButton extends StatelessWidget {
           'assets/icons/user-circle-solid.svg',
           width: 20,
           height: 20,
+          color: Theme.of(context).textTheme.bodyMedium?.color,
         ),
       ),
     );

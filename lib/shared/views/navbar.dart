@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../providers/theme.dart';
+
 class Navbar extends StatefulWidget {
   final int initialIndex;
 
@@ -26,6 +28,8 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     const double iconSize = 16;
+    final iconColor =Theme.of(context).textTheme.bodyMedium?.color;
+
     return NavigationBar(
       onDestinationSelected: (int selectedIndex) {
         if (selectedIndex != _currentIndex) {
@@ -47,6 +51,7 @@ class _NavbarState extends State<Navbar> {
             'assets/icons/archive-light.svg',
             width: iconSize,
             height: iconSize,
+            color: iconColor,
           ),
           label: 'Waste Requests',
         ),
@@ -55,6 +60,7 @@ class _NavbarState extends State<Navbar> {
             'assets/icons/procedures-light.svg',
             width: iconSize,
             height: iconSize,
+            color: iconColor,
           ),
           label: 'Patient Room',
         ),
@@ -63,6 +69,7 @@ class _NavbarState extends State<Navbar> {
             'assets/icons/clipboard-list-light.svg',
             width: iconSize,
             height: iconSize,
+            color: iconColor,
           ),
           label: 'Inventory',
         ),
