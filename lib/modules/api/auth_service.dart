@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:radsync_flutter/modules/api/auth_interceptor.dart';
 
-import '../../models/auth_token.dart';
+import '../../models/auth/auth_token.dart';
 import '../../models/constants.dart';
 import '../tools/secure_storage.dart';
 
@@ -24,7 +22,7 @@ class AuthService {
     }
   }
 
- logout() async{
+  logout() async {
     Dio dio = getDioClient();
     await dio.get("${Constants.host}/api/auth/logout");
   }
