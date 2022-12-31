@@ -40,6 +40,9 @@ class _NavbarState extends State<Navbar> {
             case 1:
               context.go('/patient-room');
               break;
+            case 2:
+              context.go('/inventory');
+              break;
           }
         }
         setState(() => _currentIndex = selectedIndex);
