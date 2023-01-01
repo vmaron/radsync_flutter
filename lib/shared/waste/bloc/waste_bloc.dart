@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:radsync_flutter/models/constants.dart';
 import 'package:radsync_flutter/models/waste/request.dart';
 import 'package:radsync_flutter/modules/api/waste_request_service.dart';
 import 'waste_event.dart';
 import 'waste_state.dart';
 
 class WasteSearchBloc extends Bloc<WasteSearchEvent, WasteSearchState> {
-  WasteSearchBloc(this.repository) : super(WasteStateEmpty()) {
+  WasteSearchBloc(this.repository) : super(const WasteSearchState()) {
     on<WasteSearchEvent>((event, emit) async {
       await _onFilterChanged(event, emit);
     });
@@ -16,14 +17,12 @@ class WasteSearchBloc extends Bloc<WasteSearchEvent, WasteSearchState> {
   final WasteRequestService repository;
 
   Future<void> _onFilterChanged(WasteSearchEvent event, Emitter<WasteSearchState> emit) async {
-    final searchTerm = event.filter;
-    emit(WasteStateStateLoading());
-
+    emit(state.copyWith(status: FetchStatus.loading, error: ''));
     try {
-      final results = await repository.getPendingRequests(searchTerm);
-      emit(WasteStateSuccess(results.data.cast<WasteRequest>()));
+      final results = await repository.getPendingRequests(event.filter);
+      emit(state.copyWith(status: FetchStatus.success, items: results.data.cast<WasteRequest>()));
     } on Exception catch (e) {
-      emit(WasteStateError(e.toString()));
+      emit(state.copyWith(status: FetchStatus.failure, error: e.toString()));
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:radsync_flutter/shared/views/views.dart';
 import 'package:radsync_flutter/models/waste/filter.dart';
+import 'package:radsync_flutter/models/constants.dart';
 import 'package:radsync_flutter/shared/waste/bloc/bloc.dart';
 
 
@@ -89,10 +90,15 @@ class _WasteHomeScreenState extends State<WasteHomeScreen> with TickerProviderSt
               int idx = entry.key;
               Tab tab = entry.value;
               if (idx == 0) {
-                if (state is WasteStateStateLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is WasteStateError) {
-                  return Empty(title: state.error);
+                switch(state.status) {
+                  case FetchStatus.initial:
+                    return const Empty();
+                  case FetchStatus.loading:
+                    return const Center(child: CircularProgressIndicator());
+                  case FetchStatus.success:
+                    return Empty(title: '${tab.title} : ${state.items.length}');
+                  case FetchStatus.failure:
+                    return Empty(title: state.error);
                 }
               }
               return Empty(title: tab.title);

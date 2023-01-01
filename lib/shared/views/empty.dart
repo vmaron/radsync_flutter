@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Empty extends StatelessWidget {
-  const Empty({required this.title, Key? key}) : super(key: key);
+  const Empty({this.title = '', Key? key}) : super(key: key);
 
   final String title;
 

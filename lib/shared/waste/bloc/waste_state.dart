@@ -1,34 +1,23 @@
 import 'package:equatable/equatable.dart';
+import 'package:radsync_flutter/models/constants.dart';
 import 'package:radsync_flutter/models/waste/request.dart';
 
-abstract class WasteSearchState extends Equatable {
-  const WasteSearchState();
+class WasteSearchState extends Equatable {
+  const WasteSearchState({this.status = FetchStatus.initial, this.items = const [], this.error = ''});
 
-  @override
-  List<Object> get props => [];
-}
-
-class WasteStateEmpty extends WasteSearchState {}
-
-class WasteStateSuccess extends WasteSearchState {
-  const WasteStateSuccess(this.items);
-
+  final FetchStatus status;
   final List<WasteRequest> items;
-
-  @override
-  List<Object> get props => [items];
-
-  @override
-  String toString() => 'WasteStateSuccess { items: ${items.length} }';
-}
-
-class WasteStateStateLoading extends WasteSearchState {}
-
-class WasteStateError extends WasteSearchState {
-  const WasteStateError(this.error);
-
   final String error;
 
   @override
-  List<Object> get props => [error];
+  List<Object> get props => [status, items, error];
+
+  WasteSearchState copyWith({
+    FetchStatus? status,
+    List<WasteRequest>? items,
+    String? error,
+  }) {
+    return WasteSearchState(
+        status: status ?? this.status, items: items ?? [], error: error ?? this.error);
+  }
 }
