@@ -11,7 +11,9 @@ WasteRequestResponse _$WasteRequestResponseFromJson(
     WasteRequestResponse(
       totalCount: json['totalCount'] as int,
       pageCount: json['pageCount'] as int,
-      data: json['data'] as List<dynamic>,
+      data: (json['data'] as List<dynamic>)
+          .map((e) => WasteRequest.fromJson(e as Map<String, dynamic>))
+          .toList(),
       succeeded: json['succeeded'] as bool,
     );
 
@@ -25,8 +27,10 @@ Map<String, dynamic> _$WasteRequestResponseToJson(
     };
 
 WasteRequest _$WasteRequestFromJson(Map<String, dynamic> json) => WasteRequest(
-      dropoffContainers: json['dropoffContainers'],
-      pickupContainers: json['pickupContainers'],
+      dropoffContainers: Containers.fromJson(
+          json['dropoffContainers'] as Map<String, dynamic>),
+      pickupContainers:
+          Containers.fromJson(json['pickupContainers'] as Map<String, dynamic>),
       id: json['id'] as int?,
       buildingId: json['buildingId'] as int?,
       buildingName: json['buildingName'] as String?,
@@ -50,9 +54,7 @@ WasteRequest _$WasteRequestFromJson(Map<String, dynamic> json) => WasteRequest(
       completedTime: json['completedTime'] == null
           ? null
           : DateTime.parse(json['completedTime'] as String),
-      completedByName: json['completedByName'] == null
-          ? null
-          : DateTime.parse(json['completedByName'] as String),
+      completedByName: json['completedByName'] as String?,
       status: json['status'] as int?,
       recurrence: json['recurrence'] as int?,
       frequency: json['frequency'] as int?,
@@ -91,7 +93,7 @@ Map<String, dynamic> _$WasteRequestToJson(WasteRequest instance) =>
       'createdTime': instance.createdTime?.toIso8601String(),
       'createdByName': instance.createdByName,
       'completedTime': instance.completedTime?.toIso8601String(),
-      'completedByName': instance.completedByName?.toIso8601String(),
+      'completedByName': instance.completedByName,
       'status': instance.status,
       'recurrence': instance.recurrence,
       'frequency': instance.frequency,
@@ -108,7 +110,9 @@ Containers _$ContainersFromJson(Map<String, dynamic> json) => Containers(
       total50GalContainers: json['total50GalContainers'] as int?,
       totalVialsContainers: json['totalVialsContainers'] as int?,
       cocktailName: json['cocktailName'] as String?,
-      solids: json['solids'] as List<dynamic>,
+      solids: (json['solids'] as List<dynamic>)
+          .map((e) => Solid.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ContainersToJson(Containers instance) =>

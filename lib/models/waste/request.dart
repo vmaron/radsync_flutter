@@ -12,7 +12,7 @@ class WasteRequestResponse {
 
   int totalCount;
   int pageCount;
-  List<dynamic> data = <WasteRequest>[];
+  List<WasteRequest> data = <WasteRequest>[];
   bool succeeded;
 
   factory WasteRequestResponse.fromJson(Map<String, dynamic> json) => _$WasteRequestResponseFromJson(json);
@@ -72,7 +72,7 @@ class WasteRequest {
   DateTime? createdTime;
   String? createdByName;
   DateTime? completedTime;
-  DateTime? completedByName;
+  String? completedByName;
   int? status;
   int? recurrence;
   int? frequency;
@@ -81,8 +81,8 @@ class WasteRequest {
   DateTime? nextScheduledDate;
   DateTime? canceledUntil;
 
-  dynamic dropoffContainers = Containers(solids: []);
-  dynamic pickupContainers = Containers(solids: []);
+  Containers dropoffContainers = Containers(solids: []);
+  Containers pickupContainers = Containers(solids: []);
 
   factory WasteRequest.fromJson(Map<String, dynamic> json) => _$WasteRequestFromJson(json);
   Map<String, dynamic> toJson() => _$WasteRequestToJson(this);
@@ -102,7 +102,7 @@ class Containers {
   int? total50GalContainers;
   int? totalVialsContainers;
   String? cocktailName;
-  List<dynamic> solids = <Solid>[];
+  List<Solid> solids = <Solid>[];
 
   factory Containers.fromJson(Map<String, dynamic> json) => _$ContainersFromJson(json);
   Map<String, dynamic> toJson() => _$ContainersToJson(this);

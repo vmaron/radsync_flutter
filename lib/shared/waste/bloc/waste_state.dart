@@ -18,6 +18,8 @@ class WasteSearchState extends Equatable {
     String? error,
   }) {
     return WasteSearchState(
-        status: status ?? this.status, items: items ?? [], error: error ?? this.error);
+        status: status ?? this.status,
+        items: items ?? this.items.toList(),
+        error: error ?? this.error);
   }
 }

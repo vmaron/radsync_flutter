@@ -20,7 +20,7 @@ class WasteSearchBloc extends Bloc<WasteSearchEvent, WasteSearchState> {
     emit(state.copyWith(status: FetchStatus.loading, error: ''));
     try {
       final results = await repository.getPendingRequests(event.filter);
-      emit(state.copyWith(status: FetchStatus.success, items: results.data.cast<WasteRequest>()));
+      emit(state.copyWith(status: FetchStatus.success, items: results.data));
     } on Exception catch (e) {
       emit(state.copyWith(status: FetchStatus.failure, error: e.toString()));
     }
