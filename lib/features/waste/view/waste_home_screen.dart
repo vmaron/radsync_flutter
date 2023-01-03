@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:intl/intl.dart';
+import 'package:radsync_flutter/models/waste/request.dart';
 import 'package:radsync_flutter/shared/views/views.dart';
 import 'package:radsync_flutter/models/waste/filter.dart';
 import 'package:radsync_flutter/models/constants.dart';
 import 'package:radsync_flutter/shared/waste/bloc/bloc.dart';
-
-
 
 class Tab {
   final String name;
@@ -90,13 +91,33 @@ class _WasteHomeScreenState extends State<WasteHomeScreen> with TickerProviderSt
               int idx = entry.key;
               Tab tab = entry.value;
               if (idx == 0) {
-                switch(state.status) {
+                switch (state.status) {
                   case FetchStatus.initial:
                     return const Empty();
                   case FetchStatus.loading:
                     return const Center(child: CircularProgressIndicator());
                   case FetchStatus.success:
-                    return Empty(title: '${tab.title} : ${state.items.length}');
+                    return Stack(
+                      children: <Widget>[
+                       /* ClipPath(
+                          clipper: WaveClipperTwo(),
+                          child: Container(
+                            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+                            height: 200,
+                          ),
+                        ),*/
+                        ListView.separated(
+                          itemCount: state.items.length,
+                          separatorBuilder: (context, index) => Divider(
+                            color: Theme.of(context).listTileTheme.textColor,
+                          ),
+                          itemBuilder: (context, index) {
+                            final item = state.items[index];
+                            return _buildItem(item);
+                          },
+                        )
+                      ],
+                    );
                   case FetchStatus.failure:
                     return Empty(title: state.error);
                 }
@@ -107,6 +128,27 @@ class _WasteHomeScreenState extends State<WasteHomeScreen> with TickerProviderSt
           bottomNavigationBar: const Navbar(initialIndex: 0),
         );
       },
+    );
+  }
+
+  Card _buildItem(WasteRequest item) {
+    var dateFormat = DateFormat('MM/dd/yyyy');
+    return Card(
+      elevation: Theme.of(context).cardTheme.elevation,
+      color: Theme.of(context).cardTheme.color,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(item.createdByName ?? ''),
+            const SizedBox(height: 5.0),
+            Text(dateFormat.format(item.createdTime!)),
+            const SizedBox(height: 5.0),
+            Text(item.buildingName ?? ''),
+          ],
+        ),
+      ),
     );
   }
 }

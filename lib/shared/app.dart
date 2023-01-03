@@ -22,8 +22,12 @@ class _RadsyncAppState extends State<RadsyncApp> {
       themeMode: ThemeMode.system,
     ));
 
-    return BlocProvider<WasteSearchBloc>(
-      create: (context) => WasteSearchBloc(WasteRequestService()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<WasteSearchBloc>(
+          create: (context) => WasteSearchBloc(WasteRequestService()),
+        ),
+      ],
       child: DynamicColorBuilder(
         builder: (lightDynamic, darkDynamic) => ThemeProvider(
             lightDynamic: lightDynamic,
